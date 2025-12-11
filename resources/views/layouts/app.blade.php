@@ -9,6 +9,13 @@
     <a href="{{ route('events.index') }}">Events</a>
 </nav>
 
+@if(session('success'))
+    <div style="padding:10px; background: #d4edda; color:#155724; margin-bottom:15px;">
+        {{ session('success') }}
+    </div>
+@endif
+
+
 <hr>
 
 @yield('content')

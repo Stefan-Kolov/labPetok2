@@ -11,10 +11,18 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::with('organizer')->paginate(10);
-        return view('events.index', compact('events'));
+        $search = $request->input('search');
+
+        $events = Event::with('organizer')
+            ->when($search, function ($query, $search) {
+                return $query->where('title', 'like', '%' . $search . '%');
+            })
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('events.index', compact('events', 'search'));
     }
 
     /**
@@ -40,7 +48,7 @@ class EventController extends Controller
         ]);
 
         Event::create($request->all());
-        return redirect()->route('events.index')->with('success', 'Event created successfully.');
+        return redirect()->route('events.index');
     }
 
     /**
@@ -74,7 +82,7 @@ class EventController extends Controller
         ]);
 
         $event->update($request->all());
-        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
+        return redirect()->route('events.index');
     }
 
     /**
@@ -83,6 +91,6 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $event->delete();
-        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
+        return redirect()->route('events.index');
     }
 }

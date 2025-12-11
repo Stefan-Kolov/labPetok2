@@ -36,7 +36,7 @@ class OrganizerController extends Controller
         ]);
 
         Organizer::create($request->all());
-        return redirect()->route('organizers.index')->with('success', 'Organizer created successfully.');
+        return redirect()->route('organizers.index');
     }
 
     /**
@@ -69,7 +69,7 @@ class OrganizerController extends Controller
         ]);
 
         $organizer->update($request->all());
-        return redirect()->route('organizers.index')->with('success', 'Organizer updated successfully.');
+        return redirect()->route('organizers.index');
     }
 
     /**
@@ -78,6 +78,6 @@ class OrganizerController extends Controller
     public function destroy(Organizer $organizer)
     {
         $organizer->delete();
-        return redirect()->route('organizers.index')->with('success', 'Organizer deleted successfully.');
+        return redirect()->route('organizers.index');
     }
 }

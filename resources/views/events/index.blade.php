@@ -8,6 +8,14 @@
         <p>{{ session('success') }}</p>
     @endif
 
+    <form action="{{ route('events.index') }}" method="GET">
+        <input type="text" name="search" placeholder="Search by title..." value="{{ $search ?? '' }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <br>
+
+
     <table border="1">
         <tr>
             <th>ID</th>
